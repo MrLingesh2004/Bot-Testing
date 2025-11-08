@@ -33,7 +33,7 @@ from telegram.ext import (
 )
 
 # ---------------- CONFIG ----------------
-BOT_TOKEN = "7219661150:AAGDA-l3vGhSBdfhWnxb9XhNazd_NIpVXZA"  # <-- set your token here
+BOT_TOKEN = ""  # <-- set your token here
 MEALDB_BASE = "https://www.themealdb.com/api/json/v1/1"
 FAVORITES_FILE = "favorites.json"
 ITEMS_PER_PAGE = 9  # 3x3 layout
