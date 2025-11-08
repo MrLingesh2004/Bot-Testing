@@ -1,0 +1,135 @@
+{% extends "includes/base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Welcome Section -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">Welcome, {{ user.username }}!</h2>
+        <p class="lead">Generate pickup lines and manage your favorites easily.</p>
+    </div>
+
+    <!-- Generator Section -->
+    <div class="card mb-5 shadow rounded-4 p-4 bg-white">
+        <h4 class="mb-3 fw-semibold">Generate Pickup Line</h4>
+        <form id="generator-form" class="row g-3 align-items-center">
+            <div class="col-md-6">
+                <select id="category" class="form-select form-select-lg">
+                    <option value="Romantic">Romantic</option>
+                    <option value="Flirty">Flirty</option>
+                    <option value="Cheesy">Cheesy</option>
+                    <option value="Funny">Funny</option>
+                    <option value="Smooth">Smooth</option>
+                    <option value="Cute">Cute</option>
+                </select>
+            </div>
+            <div class="col-md-6 d-flex gap-2">
+                <button type="button" id="generate-btn" class="btn btn-gradient btn-lg flex-grow-1">Generate</button>
+                <button type="button" id="bookmark-btn" class="btn btn-outline-dark btn-lg flex-grow-1">Bookmark</button>
+            </div>
+        </form>
+        <div id="generated-line" class="mt-4 p-3 border rounded-3 bg-light" style="min-height: 60px;">
+            Your pickup line will appear here...
+        </div>
+    </div>
+
+    <!-- Bookmarks Section -->
+    <div>
+        <h4 class="mb-3 fw-semibold">Your Bookmarks</h4>
+        <div class="row g-3" id="bookmarks-container">
+            {% for bm in bookmarks %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm rounded-4 p-3 h-100">
+                    <p class="mb-2">{{ bm.line_text }}</p>
+                    <span class="badge bg-primary">{{ bm.category }}</span>
+                    <button class="btn btn-sm btn-danger float-end delete-bookmark" data-id="{{ bm.id }}">Delete</button>
+                </div>
+            </div>
+            {% else %}
+            <p class="text-muted">No bookmarks yet. Generate and save your favorite lines!</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+.btn-gradient {
+    background: linear-gradient(45deg, #FF6B6B, #FFD93D);
+    border: none;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+#generated-line {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+</style>
+
+<!-- JS for generator and bookmarks (optional AJAX) -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const generateBtn = document.getElementById("generate-btn");
+    const bookmarkBtn = document.getElementById("bookmark-btn");
+    const lineContainer = document.getElementById("generated-line");
+    const categorySelect = document.getElementById("category");
+
+    generateBtn.addEventListener("click", async () => {
+        const category = categorySelect.value;
+        lineContainer.textContent = "Loading...";
+        try {
+            const res = await fetch(`/generate?category=${category}`);
+            const data = await res.json();
+            lineContainer.textContent = data.text;
+        } catch (err) {
+            lineContainer.textContent = "Failed to generate. Try again!";
+        }
+    });
+
+    bookmarkBtn.addEventListener("click", async () => {
+        const line = lineContainer.textContent.trim();
+        if (!line || line === "Your pickup line will appear here...") return;
+        try {
+            const res = await fetch("/bookmark", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({line: line, category: categorySelect.value})
+            });
+            const data = await res.json();
+            if (data.status === "success") location.reload();
+        } catch (err) {
+            alert("Failed to bookmark line.");
+        }
+    });
+
+    // Delete bookmarks
+    document.querySelectorAll(".delete-bookmark").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const id = btn.dataset.id;
+            try {
+                const res = await fetch("/bookmark/delete", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({id})
+                });
+                const data = await res.json();
+                if (data.status === "success") location.reload();
+            } catch (err) {
+                alert("Failed to delete bookmark.");
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

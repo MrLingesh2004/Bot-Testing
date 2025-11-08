@@ -1,0 +1,51 @@
+{% extends "includes/base.html" %}
+
+{% block content %}
+<section class="vh-100 d-flex align-items-center justify-content-center p-3" style="background: linear-gradient(135deg, #FFD93D, #FF6B6B);">
+    <div class="card p-5 shadow-lg rounded-4" style="max-width: 400px; width: 100%; background: rgba(255,255,255,0.9);">
+        <h2 class="text-center mb-4 fw-bold" style="font-family: 'Poppins', sans-serif;">Login</h2>
+        
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="mt-3">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control form-control-lg" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control form-control-lg" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn btn-gradient btn-lg w-100">Login</button>
+        </form>
+        <p class="text-center mt-3">Don't have an account? <a href="{{ url_for('register') }}" class="text-decoration-none">Register here</a></p>
+    </div>
+</section>
+
+<!-- Custom CSS -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.btn-gradient {
+    background: linear-gradient(45deg, #FF6B6B, #FFD93D);
+    border: none;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+</style>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "includes/base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">Your Bookmarks</h2>
+        <p class="lead">Manage all your saved pickup lines here.</p>
+    </div>
+
+    <div class="row g-4" id="bookmarks-container">
+        {% for bm in bookmarks %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm rounded-4 p-4 h-100 position-relative">
+                <p class="mb-3">{{ bm.line_text }}</p>
+                <span class="badge bg-primary">{{ bm.category }}</span>
+                <button class="btn btn-sm btn-danger position-absolute top-3 end-3 delete-bookmark" data-id="{{ bm.id }}">
+                    Delete
+                </button>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-muted text-center">No bookmarks yet. Generate some pickup lines and save your favorites!</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+.delete-bookmark {
+    font-size: 0.8rem;
+}
+</style>
+
+<!-- JS for deleting bookmarks -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".delete-bookmark").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const id = btn.dataset.id;
+            try {
+                const res = await fetch("/bookmark/delete", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({id})
+                });
+                const data = await res.json();
+                if (data.status === "success") location.reload();
+                else alert("Failed to delete bookmark.");
+            } catch (err) {
+                alert("Error deleting bookmark.");
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

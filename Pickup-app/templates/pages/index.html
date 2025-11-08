@@ -1,0 +1,67 @@
+{% extends "includes/base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="vh-100 d-flex align-items-center justify-content-center p-3" style="background: linear-gradient(135deg, #FF6B6B, #FFD93D);">
+    <div class="text-center text-dark p-5 rounded-4 shadow-lg" style="background: rgba(255,255,255,0.85); max-width: 700px;">
+        <h1 class="display-4 fw-bold mb-3" style="font-family: 'Poppins', sans-serif;">Pickup App</h1>
+        <p class="lead mb-4">Generate & save the perfect pickup lines. Flirty, cheesy, romantic — all in one place!</p>
+        
+        {% if not session.get('user_id') %}
+        <a href="{{ url_for('register') }}" class="btn btn-gradient btn-lg me-3">Get Started</a>
+        <a href="{{ url_for('login') }}" class="btn btn-outline-dark btn-lg">Login</a>
+        {% else %}
+        <a href="{{ url_for('dashboard') }}" class="btn btn-success btn-lg">Go to Dashboard</a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-md-4">
+                <div class="p-4 shadow rounded-4 bg-white h-100 hover-effect">
+                    <h3 class="mb-3">Flirty Lines</h3>
+                    <p>Catch hearts with clever and fun pickup lines instantly.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 shadow rounded-4 bg-white h-100 hover-effect">
+                    <h3 class="mb-3">Bookmark Favorites</h3>
+                    <p>Save your favorite lines to revisit or share later.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 shadow rounded-4 bg-white h-100 hover-effect">
+                    <h3 class="mb-3">Categories Galore</h3>
+                    <p>Choose from romantic, nerdy, cheesy, anime, and more categories.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Custom CSS for hover effect & gradient button -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.btn-gradient {
+    background: linear-gradient(45deg, #FF6B6B, #FFD93D);
+    border: none;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.hover-effect:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+</style>
+{% endblock %}
