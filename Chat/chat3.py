@@ -2,8 +2,8 @@ import requests, json
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
-Token = '7219661150:AAGDA-l3vGhSBdfhWnxb9XhNazd_NIpVXZA'
-API_KEY = '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'
+Token = ''
+API_KEY = ''
 
 f = open('modes.json', 'r')
 MODES = json.load(f)
