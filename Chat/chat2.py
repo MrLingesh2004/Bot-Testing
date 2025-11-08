@@ -99,8 +99,8 @@ class TelegramBot:
             is_run, response = self.message_handler(cid, text)
             print(is_run, updates)
             
-API_KEY = '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'
-Token = '7219661150:AAGDA-l3vGhSBdfhWnxb9XhNazd_NIpVXZA'
+API_KEY = ''
+Token = ''
 
 bot = TelegramBot(Token, API_KEY)
 bot.request()
