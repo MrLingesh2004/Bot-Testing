@@ -76,7 +76,7 @@ async def callback_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
-Token = '7219661150:AAGDA-l3vGhSBdfhWnxb9XhNazd_NIpVXZA'
+Token = ''
 
 def main():
     app = ApplicationBuilder().token(Token).build()
