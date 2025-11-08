@@ -4,7 +4,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from base import UserHandler, AdminHandler, YoutubeHandler
 
 # ================== BOT SETUP ==================
-BOT_TOKEN = '7219661150:AAGDA-l3vGhSBdfhWnxb9XhNazd_NIpVXZA'
+BOT_TOKEN = ''
 bot = telebot.TeleBot(BOT_TOKEN, parse_mode='HTML')
 
 handler = UserHandler('users.json')
