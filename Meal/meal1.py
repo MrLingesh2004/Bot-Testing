@@ -21,7 +21,7 @@ import os
 import urllib.parse
 
 # ---------------- CONFIG ----------------
-TELEGRAM_BOT_TOKEN = "7219661150:AAGDA-l3vGhSBdfhWnxb9XhNazd_NIpVXZA"   # <-- replace
+TELEGRAM_BOT_TOKEN = ""   # <-- replace
 bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN, parse_mode="HTML")
 
 FAVORITES_FILE = "favorites.json"
