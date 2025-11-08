@@ -1,7 +1,7 @@
 import telebot, requests, random
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-Token = '7219661150:AAGDA-l3vGhSBdfhWnxb9XhNazd_NIpVXZA'
+Token = ''
 bot = telebot.TeleBot(Token, parse_mode='HTML')
 
 categories = ['Romantic', 'Funny', 'Cheesy', 'Flirty', 'Clever', 'Complimentary']
